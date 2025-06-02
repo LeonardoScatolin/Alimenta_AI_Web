@@ -695,13 +695,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const macros = await AlimentaAIDataService.getPatientMacros(selectedPatientId);
             console.log('📊 Macros recebidos:', macros);
-              if (macros && macros.success && macros.data) {
-                const macroData = macros.data;
-                  // Preencher os campos com 2 casas decimais
-                macroCaloriesInput.value = Number(macroData.calories || macroData.calorias || 0).toFixed(2);
-                macroProteinsInput.value = Number(macroData.proteins || macroData.proteina || 0).toFixed(2);
-                macroCarbsInput.value = Number(macroData.carbs || macroData.carbo || macroData.carboidrato || 0).toFixed(2);
-                macroFatsInput.value = Number(macroData.fats || macroData.gordura || 0).toFixed(2);
+            
+            if (macros && macros.success && macros.macros) {
+                const macroData = macros.macros;
+                
+                // Preencher os campos com 2 casas decimais
+                macroCaloriesInput.value = Number(macroData.calorias || 0).toFixed(2);
+                macroProteinsInput.value = Number(macroData.proteina || 0).toFixed(2);
+                macroCarbsInput.value = Number(macroData.carboidrato || 0).toFixed(2);
+                macroFatsInput.value = Number(macroData.gordura || 0).toFixed(2);
                 
                 showToast('Info', 'Macros carregados com sucesso!', 'info');
             } else {
@@ -724,11 +726,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!selectedPatientId) {
             showToast('Aviso', 'Selecione um paciente primeiro', 'warning');
             return;
-        }        const macroData = {
-            calories: parseFloat(macroCaloriesInput.value) || 0,
-            proteins: parseFloat(macroProteinsInput.value) || 0,
-            carbs: parseFloat(macroCarbsInput.value) || 0,
-            fats: parseFloat(macroFatsInput.value) || 0
+        }
+
+        const macroData = {
+            calorias: parseFloat(macroCaloriesInput.value) || 0,
+            proteina: parseFloat(macroProteinsInput.value) || 0,
+            carboidrato: parseFloat(macroCarbsInput.value) || 0,
+            gordura: parseFloat(macroFatsInput.value) || 0
         };
         
         console.log('💾 Salvando macros:', { selectedPatientId, macroData });
@@ -881,17 +885,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         
         foodsTableBody.innerHTML = '';
-          foods.forEach((food, index) => {
+        
+        foods.forEach((food, index) => {
             const row = foodsTableBody.insertRow();
             row.innerHTML = `
-                <td>${food.refeicao || 'N/A'}</td>
+                <td>${index + 1}</td>
                 <td>${food.nome_alimento || 'N/A'}</td>
                 <td>${Number(food.quantidade || 0).toFixed(2)}g</td>
                 <td>${Number(food.calorias || 0).toFixed(2)}</td>
                 <td>${Number(food.proteina || 0).toFixed(2)}g</td>
                 <td>${Number(food.carboidrato || 0).toFixed(2)}g</td>
                 <td>${Number(food.gordura || 0).toFixed(2)}g</td>
-                <td>${food.data_consumo ? new Date(food.data_consumo).toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}) : food.horario || 'N/A'}</td>
+                <td>${food.data_consumo ? new Date(food.data_consumo).toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}) : 'N/A'}</td>
             `;
         });
         

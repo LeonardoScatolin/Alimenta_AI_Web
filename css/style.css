@@ -3,6 +3,10 @@
 /* Importação de Fontes (Exemplo: Google Fonts - Poppins) */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+* {
+    outline: none;
+}
+
 /* Variáveis de Cor Globais */
 :root {
     --primary-purple: #7F5AF0; /* Roxo principal vibrante */
@@ -86,13 +90,13 @@ a:hover {
 
 /* Navbar */
 .navbar {
-    background-color: var(--dark-bg-secondary) !important; /* Forçar com !important se Bootstrap estiver teimoso */
+    background-color: var(--dark-bg-secondary) !important; 
     border-bottom: 1px solid var(--border-color-dark);
-    padding-top: 1rem;
+    padding-top: 1.5rem;
     padding-bottom: 1rem;
+    height: 15vh;
     transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
-
 .navbar .navbar-brand {
     font-weight: 700;
     font-size: 1.75rem;
@@ -137,7 +141,6 @@ a:hover {
     /* background-color: rgba(22, 22, 26, 0.7);  Overlay escuro */
     z-index: 1;
 }
-
 .hero-section .container {
     position: relative;
     z-index: 2;
@@ -292,6 +295,71 @@ footer:hover .bi-heart-fill {
 }
 .zoom-in {
     transform: scale(0.9);
+}
+
+#logo-alimenta {
+    width: 400px;
+    height: auto;
+}
+
+#texto-sobre {
+    text-align: justify;
+}
+.destaque-alimenta {
+  background: linear-gradient(90deg, #5033b2, #e677c7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#btn-saiba {
+    display: inline-block;
+    text-decoration: none;
+    width: 220px;
+    height: 50px;
+    border: none;
+    border-radius: 50px;
+    padding: 2px;
+    background: linear-gradient(90deg, #5033b2, #e677c7);
+    background-size: 200% auto;
+    background-position: left center;
+    transition: background-position 0.5s ease;
+    position: relative;
+    z-index: 0;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#btn-saiba::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    border-radius: 50px;
+    background: transparent;
+    z-index: -1;
+}
+
+#btn-saiba span {
+    display: inline-block;
+    color: white;
+    font-weight: normal;
+    line-height: 46px;
+    text-align: center;
+    padding: 0 20px;
+    border-radius: 50px;
+    position: relative;
+    z-index: 1;
+    transition: background-position 0.5s ease;
+}
+
+#btn-saiba:hover {
+    background-position: right center;
+}
+
+#btn-saiba:hover span {
+    background-position: right center;
 }
 
 .is-visible { /* Classe adicionada pelo Intersection Observer */

@@ -1,0 +1,458 @@
+/* ========================================= */
+/* ADMIN STYLE - VERSÃO LIMPA E OTIMIZADA */
+/* ========================================= */
+
+/* Reset e configurações básicas */
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #6f42c1;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --dark-bg-primary: #1e1e1e;
+    --dark-bg-secondary: #2d2d2d;
+    --dark-bg-tertiary: #3d3d3d;
+    --border-color-dark: #404040;
+    --text-color-light: #e0e0e0;
+}
+
+/* Layout principal */
+body {
+    background-color: var(--dark-bg-primary);
+    color: var(--text-color-light);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+#sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -15rem;
+    transition: margin 0.25s ease-out;
+    background-color: var(--dark-bg-secondary);
+    width: 15rem;
+    z-index: 1000;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--dark-bg-primary);
+}
+
+/* Logo do admin */
+#logo-admin {
+    width: 60px;
+    height: 60px;
+    margin: 1rem auto;
+    display: block;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--dark-bg-secondary);
+    border-bottom: 1px solid var(--border-color-dark);
+    padding: 1rem;
+}
+
+.navbar-text {
+    color: var(--text-color-light);
+}
+
+/* Botões */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #5a359a;
+    border-color: #5a359a;
+}
+
+#btn-adicionar-paciente {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+#btn-adicionar-paciente:hover {
+    background-color: #5a359a;
+    transform: translateY(-2px);
+}
+
+/* Cards */
+.card {
+    background-color: var(--dark-bg-secondary);
+    border: 1px solid var(--border-color-dark);
+    color: var(--text-color-light);
+}
+
+.card-header {
+    background-color: var(--dark-bg-tertiary);
+    border-bottom: 1px solid var(--border-color-dark);
+}
+
+/* Summary cards com texto branco */
+.card.text-white .card-title,
+.card.text-white .card-text,
+.card.text-white .card-header {
+    color: white !important;
+}
+
+/* Formulários */
+.form-control,
+.form-select {
+    background-color: var(--dark-bg-tertiary);
+    border: 1px solid var(--border-color-dark);
+    color: var(--text-color-light);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--dark-bg-tertiary);
+    border-color: var(--primary-color);
+    color: var(--text-color-light);
+    box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+}
+
+.form-label {
+    color: var(--text-color-light);
+    font-weight: 500;
+}
+
+/* Modais */
+.modal-content {
+    background-color: var(--dark-bg-secondary);
+    border: 1px solid var(--border-color-dark);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color-dark);
+}
+
+.modal-title {
+    color: var(--text-color-light);
+}
+
+/* Tabelas - Base */
+.table {
+    color: var(--text-color-light);
+    background-color: transparent;
+    margin-bottom: 0;
+}
+
+.table th {
+    background-color: var(--dark-bg-tertiary);
+    border-color: var(--border-color-dark);
+    color: var(--text-color-light);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.table td {
+    border-color: var(--border-color-dark);
+    vertical-align: middle;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Container responsivo para tabelas */
+.table-responsive {
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color-dark);
+    background-color: var(--dark-bg-secondary);
+    max-height: 600px;
+    overflow: auto;
+}
+
+/* Botões de ação */
+.btn-group .btn {
+    font-size: 0.875rem;
+    padding: 0.375rem 0.75rem;
+    margin: 0.125rem;
+}
+
+/* ================================ */
+/* RESPONSIVIDADE MOBILE */
+/* ================================ */
+
+/* Desktop large */
+@media (min-width: 1200px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+    
+    #page-content-wrapper {
+        margin-left: 15rem;
+    }
+}
+
+/* Desktop */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .table-responsive {
+        max-height: 500px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .table-responsive {
+        max-height: 450px;
+        font-size: 0.9rem;
+    }
+    
+    .table th,
+    .table td {
+        padding: 0.5rem 0.4rem;
+    }
+    
+    .btn-group .btn {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.6rem;
+    }
+}
+
+/* Mobile large */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    #sidebar-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1050;
+        margin-left: -15rem;
+    }
+    
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: 0;
+    }
+    
+    .table-responsive {
+        max-height: 400px;
+        font-size: 0.85rem;
+    }
+    
+    .table th,
+    .table td {
+        padding: 0.4rem 0.3rem;
+        white-space: nowrap;
+    }
+    
+    /* Primeira coluna fixa */
+    .table th:first-child,
+    .table td:first-child {
+        position: sticky;
+        left: 0;
+        background-color: var(--dark-bg-secondary);
+        z-index: 5;
+        border-right: 1px solid var(--border-color-dark);
+    }
+    
+    .table th:first-child {
+        background-color: var(--dark-bg-tertiary);
+        z-index: 15;
+    }
+    
+    .btn-group .btn {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+/* Mobile small */
+@media (max-width: 575.98px) {
+    #sidebar-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1050;
+        margin-left: -15rem;
+    }
+    
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: 0;
+    }
+    
+    /* Navbar ajustada */
+    .navbar h5 {
+        font-size: 1rem;
+    }
+    
+    .navbar-text {
+        font-size: 0.9rem;
+    }
+    
+    /* Container principal */
+    .container-fluid {
+        padding: 0.5rem;
+    }
+    
+    /* Tabelas mobile */
+    .table-responsive {
+        max-height: 350px;
+        font-size: 0.75rem;
+        margin-top: 1rem;
+    }
+    
+    .table th,
+    .table td {
+        padding: 0.3rem 0.2rem;
+        white-space: nowrap;
+        font-size: 0.75rem;
+    }
+    
+    /* Primeira coluna fixa apenas */
+    .table th:first-child,
+    .table td:first-child {
+        position: sticky;
+        left: 0;
+        background-color: var(--dark-bg-secondary);
+        z-index: 5;
+        border-right: 1px solid var(--border-color-dark);
+        min-width: 40px;
+    }
+    
+    .table th:first-child {
+        background-color: var(--dark-bg-tertiary);
+        z-index: 15;
+    }
+    
+    /* Coluna de ações */
+    .table th:last-child,
+    .table td:last-child {
+        min-width: 160px;
+    }
+    
+    /* Botões empilhados em mobile */
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+    }
+    
+    .btn-group .btn {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.4rem;
+        margin: 0;
+        width: 100%;
+    }
+    
+    /* Esconder colunas menos importantes */
+    .table th:nth-child(4),
+    .table td:nth-child(4) {
+        display: none; /* Telefone em pacientes */
+    }
+    
+    /* Para tabela de alimentos - esconder algumas colunas nutricionais */
+    #view-foods-content .table th:nth-child(5),
+    #view-foods-content .table td:nth-child(5),
+    #view-foods-content .table th:nth-child(6),
+    #view-foods-content .table td:nth-child(6) {
+        display: none;
+    }
+    
+    /* Resumo de macros responsivo */
+    #foodsSummary .row .col-md-3 {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile extra small */
+@media (max-width: 480px) {
+    .table th:nth-child(3),
+    .table td:nth-child(3) {
+        display: none; /* Email em pacientes */
+    }
+    
+    #view-foods-content .table th:nth-child(4),
+    #view-foods-content .table td:nth-child(4) {
+        display: none; /* Mais colunas nutricionais */
+    }
+    
+    .btn-group .btn {
+        font-size: 0.6rem;
+        padding: 0.15rem 0.3rem;
+    }
+}
+
+/* Scrollbar customizada */
+.table-responsive::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: var(--dark-bg-tertiary);
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: var(--border-color-dark);
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Touch improvements */
+@media (hover: none) and (pointer: coarse) {
+    .btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .table-responsive {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Orientation adjustments */
+@media (max-width: 767px) and (orientation: landscape) {
+    .table-responsive {
+        max-height: 40vh;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .table {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}

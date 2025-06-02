@@ -13,7 +13,7 @@
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="assets/images/logo.png" alt="AlimentaAI Logo" style="height: 40px; margin-right: 10px;"> AlimentaAI
+                <img src="img/logoetextfinal.svg" alt="AlimentaAI Logo" id="logo-alimenta">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,7 @@
                         <a class="nav-link" href="#contact">Contato</a>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class="btn btn-primary ms-lg-3" data-bs-toggle="modal" data-bs-target="#adminLoginModal">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adminLoginModal">
                             Login Admin
                         </button>
                     </li>
@@ -44,9 +44,11 @@
 
     <header class="hero-section d-flex align-items-center justify-content-center text-center">
         <div class="container">
-            <h1 class="display-3 fw-bold">Bem-vindo ao AlimentaAI</h1>
+            <h1 class="display-3 fw-bold">
+                 Bem-vindo ao <span class="destaque-alimenta">AlimentaAI</span>!
+            </h1>
             <p class="lead my-3">Sua jornada para uma nutrição inteligente começa aqui. Registre suas refeições por voz e deixe nossa IA cuidar do resto.</p>
-            <a href="#features" class="btn btn-lg btn-light text-primary fw-bold">Saiba Mais</a>
+            <a href="#features" id="btn-saiba"><span>Saiba Mais</span></a>
         </div>
     </header>
 
@@ -93,11 +95,13 @@
             <div class="row align-items-center">
                 <div class="col-md-6 animated-item fade-in-left" style="animation-delay: 0.1s;">
                     <h2 class="fw-bold">Sobre o AlimentaAI</h2>
-                    <p>O AlimentaAI nasceu da necessidade de simplificar o acompanhamento nutricional. Acreditamos que a tecnologia pode ser uma grande aliada na busca por uma vida mais saudável, tornando o processo de contagem de macros intuitivo e menos tedioso.</p>
-                    <p>Nossa missão é empoderar usuários e nutricionistas com ferramentas inteligentes para alcançar objetivos de saúde e bem-estar.</p>
+                    <p id="texto-sobre">
+                        O AlimentaAI nasceu da necessidade de simplificar o acompanhamento nutricional. Acreditamos que a tecnologia pode ser uma grande aliada na busca por uma vida mais saudável, tornando o processo de contagem de macros intuitivo e menos tedioso.
+                        Nossa missão é empoderar usuários e nutricionistas com ferramentas inteligentes para alcançar objetivos de saúde e bem-estar.
+                    </p>
                 </div>
                 <div class="col-md-6 text-center animated-item fade-in-right" style="animation-delay: 0.3s;">
-                    <img src="assets/images/app-showcase.png" alt="App AlimentaAI Showcase" class="img-fluid rounded shadow-lg" style="max-height: 400px;">
+                    <img src="img/logo.svg" alt="App AlimentaAI Showcase" class="" style="max-height: 400px;">
                 </div>
             </div>
         </div>
@@ -125,7 +129,7 @@
                             <textarea class="form-control" id="contactMessage" rows="4" required></textarea>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-lg">Enviar Mensagem</button>
+                            <button type="submit" class="btn btn-primary btn-lg" id="btn-saiba">Enviar Mensagem</button>
                         </div>
                     </form>
                 </div>

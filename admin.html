@@ -15,9 +15,7 @@
 
     <div class="d-flex" id="wrapper">
         <div class="bg-dark border-end" id="sidebar-wrapper">
-            <div class="sidebar-heading border-bottom bg-dark text-white">
-                <img src="assets/images/logo.png" alt="Logo" style="height: 30px; margin-right: 10px;"> AlimentaAI Admin
-            </div>
+        <img src="img/chatLogo.svg" alt="Logo" id="logo-admin"> 
             <div class="list-group list-group-flush">
                 <a href="#dashboard" class="list-group-item list-group-item-action list-group-item-dark p-3 active"
                     data-bs-toggle="tab" data-bs-target="#dashboard-content">
@@ -41,7 +39,7 @@
             </div>
         </div>
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg border-bottom">
+            <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
                     <button class="btn btn-primary" id="sidebarToggle"><i class="bi bi-list"></i></button>
                     <h5 class="ms-3 mb-0 d-none d-md-block">Painel do Nutricionista</h5>
@@ -74,7 +72,7 @@
                     <h1 class="mt-4">Gerenciar Pacientes</h1>
                     <p>Adicione, remova ou altere informações e status dos pacientes.</p>
 
-                    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addPatientModal">
+                    <button id="btn-adicionar-paciente" data-bs-toggle="modal" data-bs-target="#addPatientModal">
                         <i class="bi bi-person-plus-fill me-1"></i> Adicionar Paciente
                     </button>
 
@@ -149,7 +147,7 @@
                         <div class="col-md-4">
                             <label for="selectPatientForFoods" class="form-label">Selecionar Paciente</label>
                             <select class="form-select" id="selectPatientForFoods">
-                                <option value="" selected disabled>-- Escolha um paciente --</option>
+                                <option value="">-- Escolha um paciente --</option>
                             </select>
                         </div>
                         <div class="col-md-3">

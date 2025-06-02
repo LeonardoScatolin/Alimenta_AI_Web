@@ -253,17 +253,20 @@
                     message: 'Erro de conexão' 
                 };
             }
-        },
-
-        getPatientFoods: async function(patientId, date) {
+        },        getPatientFoods: async function(patientId, date) {
+            console.log('🚀 FRONTEND: getPatientFoods INICIOU');
+            console.log('🚀 FRONTEND: Parâmetros recebidos:', { patientId, date });
+            
             try {
                 const adminInfo = this.getLoggedInAdminInfo();
+                console.log('🚀 FRONTEND: adminInfo obtido:', adminInfo ? 'PRESENTE' : 'AUSENTE');
+                
                 if (!adminInfo || !adminInfo.token) {
-                    console.log('❌ Usuário não autenticado');
+                    console.log('❌ FRONTEND: Usuário não autenticado');
                     return { success: false, message: 'Usuário não autenticado' };
                 }
 
-                console.log('🍽️ Buscando alimentos do paciente:', { 
+                console.log('🍽️ FRONTEND: Buscando alimentos do paciente:', { 
                     patientId, 
                     patientIdType: typeof patientId,
                     date, 
@@ -272,20 +275,23 @@
                 });
 
                 const url = `${API_BASE_URL}/alimentos-detalhados/data/${patientId}${date ? `?data=${date}` : ''}`;
-                console.log('🔗 URL completa:', url);
+                console.log('🔗 FRONTEND: URL completa:', url);
+                console.log('🔗 FRONTEND: API_BASE_URL:', API_BASE_URL);
                 
                 const headers = {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${adminInfo.token}`
                 };
-                console.log('📨 Headers:', headers);
+                console.log('📨 FRONTEND: Headers:', headers);
 
+                console.log('📡 FRONTEND: Fazendo fetch...');
                 const response = await fetch(url, {
                     method: 'GET',
                     headers: headers
                 });
 
-                console.log('📡 Status da resposta:', response.status, response.statusText);
+                console.log('📡 FRONTEND: Status da resposta:', response.status, response.statusText);
+                console.log('📡 FRONTEND: Response object:', response);
                 
                 if (!response.ok) {
                     const errorText = await response.text();
@@ -300,12 +306,47 @@
                         foods: [],
                         totals: { calories: 0, proteins: 0, carbs: 0, fats: 0 }
                     };
-                }
-
-                const data = await response.json();
+                }                const data = await response.json();
                 console.log('📡 Resposta completa dos alimentos:', JSON.stringify(data, null, 2));
 
-                if (data.status && data.data && data.data.refeicoes) {
+                // Novo formato: o backend retorna { success: true, foods: [...], totals: {...} }
+                if (data.success && data.foods) {
+                    console.log('✅ FRONTEND: Dados no formato correto, processando...');
+                    console.log('✅ FRONTEND: Total de alimentos recebidos:', data.foods.length);
+                      // Mapear dados para o formato esperado pelo admin.js
+                    const foods = data.foods.map(food => ({
+                        refeicao: food.refeicao ? food.refeicao.replace('_', ' ').toUpperCase() : 'N/A',
+                        nome_alimento: food.nome || food.alimento_nome || 'N/A',
+                        quantidade: food.quantidade || 0,
+                        calorias: food.calorias || 0,
+                        proteina: food.proteinas || 0,
+                        carboidrato: food.carboidratos || 0,
+                        gordura: food.gorduras || 0,
+                        data_consumo: food.data_consumo || food.horario || null,
+                        horario: food.horario || '--'
+                    }));
+
+                    const totals = {
+                        total_calorias: data.totals?.calories || 0,
+                        total_proteina: data.totals?.proteins || 0,
+                        total_carboidrato: data.totals?.carbs || 0,
+                        total_gordura: data.totals?.fats || 0
+                    };
+
+                    console.log('✅ FRONTEND: Alimentos processados:', { totalFoods: foods.length, totals });
+
+                    return { 
+                        success: true, 
+                        foods,
+                        totals,
+                        totalItems: foods.length,
+                        message: data.message || `${foods.length} alimento(s) encontrado(s)`
+                    };
+                }
+                
+                // Formato antigo (mantido para compatibilidade)
+                else if (data.status && data.data && data.data.refeicoes) {
+                    console.log('✅ FRONTEND: Dados no formato antigo, processando...');
                     // Transformar dados para o formato da tabela
                     const foods = [];
                     let totals = { calories: 0, proteins: 0, carbs: 0, fats: 0 };
@@ -350,6 +391,7 @@
                         totalItems: foods.length
                     };
                 } else {
+                    console.log('❌ FRONTEND: Formato de dados não reconhecido:', data);
                     return { 
                         success: false, 
                         message: data.message || 'Nenhum alimento encontrado',
@@ -627,13 +669,18 @@
                         message: data.message || 'Erro ao alterar status do paciente'
                     };
                 }
-            } catch (error) {
-                console.error('❌ Erro ao alterar status:', error);
+            } catch (error) {                console.error('❌ Erro ao alterar status:', error);
                 return { 
                     success: false, 
                     message: 'Erro de conexão'
                 };
             }
+        },
+
+        // Alias para compatibilidade com admin.js
+        getConsumedFoodsByDate: async function(patientId, date) {
+            console.log('📄 FRONTEND: getConsumedFoodsByDate chamado (redirecionando para getPatientFoods)');
+            return this.getPatientFoods(patientId, date);
         }
     };
 
