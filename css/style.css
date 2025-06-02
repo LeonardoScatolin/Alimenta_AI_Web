@@ -1,0 +1,356 @@
+/* --- css/style.css --- */
+
+/* Importação de Fontes (Exemplo: Google Fonts - Poppins) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Variáveis de Cor Globais */
+:root {
+    --primary-purple: #7F5AF0; /* Roxo principal vibrante */
+    --primary-purple-hover: #6A45D5;
+    --secondary-purple: #9D8EEE; /* Roxo mais claro para acentos secundários */
+    
+    --dark-bg-primary: #16161A;   /* Fundo escuro principal (quase preto) */
+    --dark-bg-secondary: #242629; /* Fundo escuro para elementos (cards, navbar) */
+    --dark-bg-tertiary: #2E3033;  /* Fundo para hover ou elementos internos */
+
+    --light-text-primary: #FFFFFE; /* Texto principal claro */
+    --light-text-secondary: #94A1B2;/* Texto secundário/muted claro */
+    --light-text-tertiary: #72757E; /* Texto ainda mais suave */
+
+    --border-color-dark: #43454A;
+
+    --font-primary: 'Poppins', sans-serif;
+}
+
+/* Estilos Globais */
+body {
+    font-family: var(--font-primary);
+    background-color: var(--dark-bg-primary);
+    color: var(--light-text-primary);
+    padding-top: 80px; /* Ajuste para navbar fixa mais alta */
+    overflow-x: hidden; /* Prevenir scroll horizontal */
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    font-weight: 600;
+    color: var(--light-text-primary);
+}
+
+p {
+    color: var(--light-text-secondary);
+    line-height: 1.7;
+}
+
+a {
+    color: var(--primary-purple);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--secondary-purple);
+}
+
+.btn-primary {
+    background-color: var(--primary-purple);
+    border-color: var(--primary-purple);
+    color: var(--light-text-primary);
+    padding: 12px 30px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--primary-purple-hover);
+    border-color: var(--primary-purple-hover);
+    color: var(--light-text-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(127, 90, 240, 0.3);
+}
+
+.btn-light.text-primary { /* Botão "Saiba Mais" no Hero */
+    background-color: var(--light-text-primary);
+    color: var(--primary-purple) !important; /* Forçar cor roxa */
+    border: 1px solid var(--light-text-primary);
+}
+.btn-light.text-primary:hover {
+    background-color: var(--secondary-purple);
+    color: var(--light-text-primary) !important;
+    border-color: var(--secondary-purple);
+}
+
+
+/* Navbar */
+.navbar {
+    background-color: var(--dark-bg-secondary) !important; /* Forçar com !important se Bootstrap estiver teimoso */
+    border-bottom: 1px solid var(--border-color-dark);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.navbar .navbar-brand {
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: var(--light-text-primary) !important;
+}
+.navbar .nav-link {
+    color: var(--light-text-secondary) !important;
+    font-weight: 500;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    transition: color 0.3s ease;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: var(--primary-purple) !important;
+}
+.navbar .btn-primary { /* Botão de Login Admin na Navbar */
+    padding: 8px 20px; /* Menor que os botões principais */
+}
+
+/* Hero Section */
+.hero-section {
+    /* background: linear-gradient(135deg, var(--primary-purple) 0%, var(--dark-bg-primary) 70%), url('../assets/images/hero-bg.jpg') no-repeat center center/cover; */
+    /* background-blend-mode: multiply; */
+    background-color: var(--dark-bg-primary); /* Sem imagem de fundo por enquanto, foco no gradiente ou cor sólida */
+    min-height: calc(100vh - 80px);
+    position: relative;
+    color: var(--light-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Para animações que saem da tela */
+}
+
+.hero-section::before { /* Opcional: para um overlay sutil se usar imagem de fundo */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(22, 22, 26, 0.7);  Overlay escuro */
+    z-index: 1;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.hero-section p.lead {
+    font-size: 1.20rem; /* Ajustado */
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Features Section */
+#features {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    background-color: var(--dark-bg-primary); /* Pode ser um pouco diferente para contraste */
+}
+#features .feature-card {
+    background-color: var(--dark-bg-secondary);
+    border: 1px solid var(--border-color-dark);
+    border-radius: 10px;
+    padding: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+#features .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(127, 90, 240, 0.15);
+    border-color: var(--primary-purple);
+}
+#features .feature-card .bi {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-purple);
+    display: inline-block; /* Para animação */
+    transition: transform 0.3s ease;
+}
+#features .feature-card:hover .bi {
+    transform: scale(1.1) rotate(-5deg);
+}
+#features .feature-card h5 {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+/* About Section */
+#about {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    background-color: var(--dark-bg-secondary);
+}
+#about img.img-fluid {
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+/* Contact Section */
+#contact {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    background-color: var(--dark-bg-primary);
+}
+#contact .form-control {
+    background-color: var(--dark-bg-secondary);
+    color: var(--light-text-primary);
+    border: 1px solid var(--border-color-dark);
+    padding: 1rem;
+    border-radius: 8px;
+}
+#contact .form-control:focus {
+    background-color: var(--dark-bg-tertiary);
+    color: var(--light-text-primary);
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 0.25rem rgba(127, 90, 240, 0.25);
+}
+#contact ::placeholder {
+    color: var(--light-text-tertiary);
+}
+
+/* Footer */
+footer {
+    background-color: var(--dark-bg-secondary);
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    border-top: 1px solid var(--border-color-dark);
+}
+footer p {
+    margin-bottom: 0.5rem;
+    color: var(--light-text-secondary);
+}
+footer .bi-heart-fill {
+    color: var(--primary-purple);
+    transition: transform 0.3s ease;
+}
+footer:hover .bi-heart-fill {
+    transform: scale(1.3);
+}
+
+/* Modal de Login Admin */
+.modal-content {
+    background-color: var(--dark-bg-secondary);
+    color: var(--light-text-primary);
+    border-radius: 10px;
+    border: 1px solid var(--border-color-dark);
+}
+.modal-header {
+    background-color: var(--dark-bg-tertiary); /* Um pouco diferente para o cabeçalho do modal */
+    color: var(--light-text-primary);
+    border-bottom: 1px solid var(--border-color-dark);
+}
+.modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%); /* Para o X ficar branco */
+}
+.modal-body .form-label {
+    color: var(--light-text-secondary);
+}
+.modal-body .form-control {
+    background-color: var(--dark-bg-primary); /* Inputs dentro do modal podem ser mais escuros */
+    color: var(--light-text-primary);
+    border: 1px solid var(--border-color-dark);
+}
+.modal-body .form-control:focus {
+    background-color: var(--dark-bg-primary);
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 0.25rem rgba(127, 90, 240, 0.25);
+}
+
+
+/* Animações de Scroll (Intersection Observer) e Entrada */
+.animated-item {
+    opacity: 0;
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-up {
+    transform: translateY(30px);
+}
+.fade-in-left {
+    transform: translateX(-30px);
+}
+.fade-in-right {
+    transform: translateX(30px);
+}
+.zoom-in {
+    transform: scale(0.9);
+}
+
+.is-visible { /* Classe adicionada pelo Intersection Observer */
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+}
+
+/* Animações de entrada para elementos do Hero */
+.hero-section h1, .hero-section p.lead, .hero-section .btn {
+    opacity: 0;
+}
+.hero-section h1 {
+    animation: heroFadeInUp 0.8s 0.3s forwards ease-out;
+}
+.hero-section p.lead {
+    animation: heroFadeInUp 0.8s 0.6s forwards ease-out;
+}
+.hero-section .btn {
+    animation: heroZoomIn 0.6s 0.9s forwards ease-out;
+}
+
+@keyframes heroFadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroZoomIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+
+/* Responsividade */
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        background-color: var(--dark-bg-tertiary);
+        border-radius: 0.25rem;
+        margin-top: 0.5rem;
+        padding: 0.5rem 0;
+    }
+    .hero-section h1 {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body {
+        padding-top: 70px; /* Ajustar se a navbar ficar menor no mobile */
+    }
+    .hero-section {
+        text-align: center;
+    }
+    .hero-section h1 {
+        font-size: 2.2rem;
+    }
+    .hero-section p.lead {
+        font-size: 1.1rem;
+    }
+    #about .row > div {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+}
