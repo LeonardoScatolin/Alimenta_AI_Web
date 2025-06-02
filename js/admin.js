@@ -241,11 +241,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (inputElement && inputElement.value) {
             inputElement.value = formatPhoneNumber(inputElement.value.replace(/\D/g, ''));
         }
-    }
-
-    function handleAdminLogout() {
-        AlimentaAIDataService.adminLogout();
-        window.location.href = 'index.html';
+    }    async function handleAdminLogout() {
+        try {
+            await AlimentaAIDataService.logoutAdmin();
+            window.location.href = 'index.html';
+        } catch (error) {
+            console.error('Erro ao fazer logout:', error);
+            // Mesmo com erro, limpa o localStorage e redireciona
+            localStorage.removeItem('adminLoggedIn');
+            localStorage.removeItem('adminUser');
+            window.location.href = 'index.html';
+        }
     }
 
     function showToast(title, message, type = 'success') {
