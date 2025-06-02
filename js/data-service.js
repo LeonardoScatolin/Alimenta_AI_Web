@@ -312,17 +312,16 @@
                 // Novo formato: o backend retorna { success: true, foods: [...], totals: {...} }
                 if (data.success && data.foods) {
                     console.log('✅ FRONTEND: Dados no formato correto, processando...');
-                    console.log('✅ FRONTEND: Total de alimentos recebidos:', data.foods.length);
-                      // Mapear dados para o formato esperado pelo admin.js
+                    console.log('✅ FRONTEND: Total de alimentos recebidos:', data.foods.length);                    // Mapear dados para o formato esperado pelo admin.js
                     const foods = data.foods.map(food => ({
                         refeicao: food.refeicao ? food.refeicao.replace('_', ' ').toUpperCase() : 'N/A',
                         nome_alimento: food.nome || food.alimento_nome || 'N/A',
-                        quantidade: food.quantidade || 0,
+                        quantidade: food.quantidade || '0g', // Já vem formatado do backend como "100g"
                         calorias: food.calorias || 0,
                         proteina: food.proteinas || 0,
                         carboidrato: food.carboidratos || 0,
                         gordura: food.gorduras || 0,
-                        data_consumo: food.data_consumo || food.horario || null,
+                        data_consumo: food.horario || null, // horario já vem formatado do backend
                         horario: food.horario || '--'
                     }));
 

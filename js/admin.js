@@ -882,16 +882,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         foodsTableBody.innerHTML = '';
           foods.forEach((food, index) => {
-            const row = foodsTableBody.insertRow();
-            row.innerHTML = `
+            const row = foodsTableBody.insertRow();            row.innerHTML = `
                 <td>${food.refeicao || 'N/A'}</td>
                 <td>${food.nome_alimento || 'N/A'}</td>
-                <td>${Number(food.quantidade || 0).toFixed(2)}g</td>
+                <td>${food.quantidade || '0g'}</td>
                 <td>${Number(food.calorias || 0).toFixed(2)}</td>
                 <td>${Number(food.proteina || 0).toFixed(2)}g</td>
                 <td>${Number(food.carboidrato || 0).toFixed(2)}g</td>
                 <td>${Number(food.gordura || 0).toFixed(2)}g</td>
-                <td>${food.data_consumo ? new Date(food.data_consumo).toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}) : food.horario || 'N/A'}</td>
+                <td>${food.horario || 'N/A'}</td>
             `;
         });
         
