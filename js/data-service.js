@@ -526,7 +526,11 @@
                     return { success: false, message: 'Usuário não autenticado' };
                 }
 
-                console.log('🗑️ Removendo paciente:', { patientEmailOrId });
+                console.log('🗑️ Removendo paciente:', { 
+                    patientEmailOrId, 
+                    url: `${API_BASE_URL}/pacientes/${patientEmailOrId}`,
+                    token: adminInfo.token ? 'Presente' : 'Ausente'
+                });
 
                 const response = await fetch(`${API_BASE_URL}/pacientes/${patientEmailOrId}`, {
                     method: 'DELETE',
@@ -536,8 +540,11 @@
                     }
                 });
 
+                console.log('📡 Status da resposta:', response.status);
+                console.log('📡 Headers da resposta:', response.headers);
+
                 const data = await response.json();
-                console.log('📡 Resposta da remoção:', data);
+                console.log('📡 Resposta completa da remoção:', data);
 
                 if (response.ok && data.status) {
                     return { 
@@ -545,16 +552,17 @@
                         message: data.message || 'Paciente removido com sucesso'
                     };
                 } else {
+                    console.error('❌ Falha na remoção:', { status: response.status, data });
                     return { 
                         success: false, 
-                        message: data.message || 'Erro ao remover paciente'
+                        message: data.message || data.error || 'Erro ao remover paciente'
                     };
                 }
             } catch (error) {
-                console.error('❌ Erro ao remover paciente:', error);
+                console.error('❌ Erro crítico ao remover paciente:', error);
                 return { 
                     success: false, 
-                    message: 'Erro de conexão'
+                    message: 'Erro de conexão: ' + error.message
                 };
             }
         },updatePatientPassword: async function(patientEmailOrId, newPassword) {

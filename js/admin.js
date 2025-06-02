@@ -350,13 +350,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const result = await AlimentaAIDataService.getPatients();
             console.log("loadAndDisplayPatients - Resultado recebido:", result);
-            
-            if (result.success && result.patients) {
+              if (result.success && result.patients) {
                 const patients = result.patients;
+                const activePatients = patients.filter(patient => patient.status === 'active');
                 renderPatientsTable(patients); 
                 populatePatientSelect(patients); 
-                await updateDashboardStats(patients.length);
-                showToast('Sucesso', `${patients.length} paciente(s) carregado(s)`, 'success');
+                await updateDashboardStats(activePatients.length);
+                showToast('Sucesso', `${patients.length} paciente(s) carregado(s) (${activePatients.length} ativo(s))`, 'success');
             } else {
                 console.error("Erro ao carregar pacientes:", result.message);
                 showToast('Aviso', result.message || 'Nenhum paciente encontrado', 'warning');
@@ -373,9 +373,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         } finally {
             showSpinnerLoading('patientsTableBody', false);
         }
-    }
-
-    function renderPatientsTable(patients) {
+    }    function renderPatientsTable(patients) {
         if (!patientsTableBody) { 
             console.error("Elemento patientsTableBody não encontrado!"); 
             return; 
@@ -387,14 +385,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             patientsTableBody.innerHTML = `<tr><td colspan="6" class="text-center">Nenhum paciente cadastrado.</td></tr>`;
             return;
         }
-        
-        patients.forEach((patient, index) => {
+          patients.forEach((patient, index) => {
             const row = patientsTableBody.insertRow();
-            const statusText = patient.status === 'active' ? 'Ativo' : 'Inativo';
-            const statusClass = patient.status === 'active' ? 'badge bg-success' : 'badge bg-secondary';
-            const toggleButtonText = patient.status === 'active' ? 'Desativar' : 'Ativar';
-            const toggleButtonClass = patient.status === 'active' ? 'btn-outline-danger' : 'btn-outline-success';
-            const toggleButtonIcon = patient.status === 'active' ? 'bi-toggle-off' : 'bi-toggle-on';
+            // Usar o campo ativo (1 ou 0) para determinar o status
+            const isActive = patient.status === 'active';
+            const statusText = isActive ? 'Ativo' : 'Desativado';
+            const statusClass = isActive ? 'badge bg-success' : 'badge bg-danger';
+            const toggleButtonText = isActive ? 'Desativar' : 'Ativar';
+            const toggleButtonClass = isActive ? 'btn-outline-danger' : 'btn-outline-success';
+            const toggleButtonIcon = isActive ? 'bi-toggle-off' : 'bi-toggle-on';
             
             row.innerHTML = `
                 <th scope="row">${index + 1}</th>
@@ -418,11 +417,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                             data-patient-id="${patient.id}" data-patient-email="${patient.email}"
                             title="Alterar Senha">
                         <i class="bi bi-key-fill"></i>
-                    </button>
-                    <button class="btn btn-sm btn-danger mb-1 btn-remove-patient" 
+                    </button>                    <button class="btn btn-sm btn-danger mb-1 btn-remove-patient" 
                             data-patient-id="${patient.id}" data-patient-name="${patient.name || patient.email}"
-                            title="Remover Paciente">
-                        <i class="bi bi-trash-fill"></i>
+                            title="EXCLUIR permanentemente do sistema">
+                        <i class="bi bi-trash-fill"></i> <span class="d-none d-lg-inline">Excluir</span>
                     </button>
                 </td>`;
         });
@@ -450,16 +448,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!activePatientsCount) {
             console.error("Elemento 'activePatientsCount' não foi encontrado no DOM.");
             return;
-        }
-
-        let finalCount = 0;
+        }        let finalCount = 0;
         if (count !== null && typeof count === 'number') {
             finalCount = count;
         } else {
             try {
                 const result = await AlimentaAIDataService.getPatients();
                 if (result.success && Array.isArray(result.patients)) {
-                    finalCount = result.patients.length;
+                    // Contar apenas pacientes ativos para o dashboard
+                    finalCount = result.patients.filter(patient => patient.status === 'active').length;
                 } else {
                     finalCount = 0;
                 }
@@ -561,27 +558,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         } finally { 
             setButtonLoading(submitButton, false, 'Salvar Alterações');
         }
-    }
-
-    async function handleRemovePatient(patientId, patientName) {
-        showConfirmationModal('Confirmar Remoção', 
-            `Tem certeza que deseja remover <strong>${patientName}</strong>?`,
-            async () => {
+    }    async function handleRemovePatient(patientId, patientName) {
+        showConfirmationModal('⚠️ EXCLUIR PERMANENTEMENTE', 
+            `<div class="alert alert-danger">
+                <strong>ATENÇÃO:</strong> Esta ação irá <strong>DELETAR PERMANENTEMENTE</strong> o paciente <strong>${patientName}</strong> e todos os seus dados do sistema.
+                <br><br>
+                <strong>Esta ação NÃO PODE ser desfeita!</strong>
+                <br><br>
+                Se você deseja apenas desativar o paciente temporariamente, use o botão "Desativar" ao lado.
+            </div>
+            <p>Tem certeza que deseja <strong>EXCLUIR PERMANENTEMENTE</strong> este paciente?</p>`,            async () => {
                 try {
+                    console.log('🗑️ Iniciando exclusão do paciente ID:', patientId);
                     const result = await AlimentaAIDataService.removePatient(patientId);
+                    console.log('📡 Resultado da exclusão:', result);
+                    
                     if (result && result.success) {
-                        showToast('Sucesso', `Paciente ${patientName} removido!`, 'success');
+                        showToast('Sucesso', `Paciente ${patientName} excluído permanentemente!`, 'success');
                         await loadAndDisplayPatients();
                     } else { 
-                        showToast('Erro', result ? result.message : 'Não foi possível remover.', 'danger');
+                        console.error('❌ Erro na exclusão:', result);
+                        showToast('Erro', result ? result.message : 'Não foi possível excluir.', 'danger');
                     }
                 } catch (error) { 
-                    console.error(error); 
-                    showToast('Erro', 'Falha no servidor.', 'danger');
+                    console.error('❌ Erro crítico na exclusão:', error); 
+                    showToast('Erro', 'Falha no servidor: ' + error.message, 'danger');
                 } finally { 
                     confirmationModal.hide(); 
                 }
-            }, 'btn-danger', 'Sim, Remover');
+            }, 'btn-danger', 'Sim, EXCLUIR PERMANENTEMENTE');
     }
 
     async function handleChangePasswordSubmit(event) {
