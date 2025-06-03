@@ -1,29 +1,32 @@
 /* --- css/style.css --- */
 
-/* Importação de Fontes (Exemplo: Google Fonts - Poppins) */
+/* Importação de Fontes */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 * {
     outline: none;
+    box-sizing: border-box;
 }
 
 /* Variáveis de Cor Globais */
 :root {
-    --primary-purple: #7F5AF0; /* Roxo principal vibrante */
+    --primary-purple: #7F5AF0;
     --primary-purple-hover: #6A45D5;
-    --secondary-purple: #9D8EEE; /* Roxo mais claro para acentos secundários */
+    --secondary-purple: #9D8EEE; 
     
-    --dark-bg-primary: #16161A;   /* Fundo escuro principal (quase preto) */
-    --dark-bg-secondary: #242629; /* Fundo escuro para elementos (cards, navbar) */
-    --dark-bg-tertiary: #2E3033;  /* Fundo para hover ou elementos internos */
+    --dark-bg-primary: #16161A;
+    --dark-bg-secondary: #242629;
+    --dark-bg-tertiary: #2E3033;
 
-    --light-text-primary: #FFFFFE; /* Texto principal claro */
-    --light-text-secondary: #94A1B2;/* Texto secundário/muted claro */
-    --light-text-tertiary: #72757E; /* Texto ainda mais suave */
+    --light-text-primary: #FFFFFE;
+    --light-text-secondary: #94A1B2;
+    --light-text-tertiary: #72757E;
 
     --border-color-dark: #43454A;
-
     --font-primary: 'Poppins', sans-serif;
+
+    --navbar-height-desktop: 90px;
+    --navbar-height-mobile: 70px;
 }
 
 /* Estilos Globais */
@@ -31,8 +34,8 @@ body {
     font-family: var(--font-primary);
     background-color: var(--dark-bg-primary);
     color: var(--light-text-primary);
-    padding-top: 80px; /* Ajuste para navbar fixa mais alta */
-    overflow-x: hidden; /* Prevenir scroll horizontal */
+    padding-top: var(--navbar-height-desktop);
+    overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
@@ -40,11 +43,13 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-primary);
     font-weight: 600;
     color: var(--light-text-primary);
+    line-height: 1.3;
 }
 
 p {
     color: var(--light-text-secondary);
     line-height: 1.7;
+    font-size: 1rem;
 }
 
 a {
@@ -52,166 +57,222 @@ a {
     text-decoration: none;
     transition: color 0.3s ease;
 }
-
 a:hover {
     color: var(--secondary-purple);
+}
+
+.btn {
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 8px;
+    font-weight: 500;
 }
 
 .btn-primary {
     background-color: var(--primary-purple);
     border-color: var(--primary-purple);
     color: var(--light-text-primary);
-    padding: 12px 30px;
-    font-weight: 500;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+    padding: 12px 28px; /* Ajuste fino */
+    box-shadow: 0 2px 5px rgba(127, 90, 240, 0.2);
 }
-
 .btn-primary:hover,
 .btn-primary:focus {
     background-color: var(--primary-purple-hover);
     border-color: var(--primary-purple-hover);
     color: var(--light-text-primary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(127, 90, 240, 0.3);
+    transform: translateY(-3px); /* Efeito de elevação maior */
+    box-shadow: 0 5px 15px rgba(127, 90, 240, 0.35);
 }
-
-.btn-light.text-primary { /* Botão "Saiba Mais" no Hero */
-    background-color: var(--light-text-primary);
-    color: var(--primary-purple) !important; /* Forçar cor roxa */
-    border: 1px solid var(--light-text-primary);
-}
-.btn-light.text-primary:hover {
-    background-color: var(--secondary-purple);
-    color: var(--light-text-primary) !important;
-    border-color: var(--secondary-purple);
-}
-
 
 /* Navbar */
 .navbar {
     background-color: var(--dark-bg-secondary) !important; 
     border-bottom: 1px solid var(--border-color-dark);
-    padding-top: 1.5rem;
-    padding-bottom: 1rem;
-    height: 15vh;
+    min-height: var(--navbar-height-desktop); /* Altura mínima */
+    padding: 0.5rem 1rem; /* Ajuste de padding */
     transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+#logo-alimenta {
+    max-height: 50px; /* Altura máxima para o logo na navbar */
+    width: auto;
+    max-width: 220px; /* Max-width para desktop */
+    transition: max-width 0.3s ease;
 }
 .navbar .navbar-brand {
     font-weight: 700;
     font-size: 1.75rem;
     color: var(--light-text-primary) !important;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 .navbar .nav-link {
     color: var(--light-text-secondary) !important;
     font-weight: 500;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
+    margin: 0 0.75rem; /* Espaçamento entre links */
     transition: color 0.3s ease;
+    padding: 0.5rem 0;
+    position: relative;
+}
+.navbar .nav-link::after { /* Efeito de sublinhado sutil no hover */
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-purple);
+    transition: width 0.3s ease;
+}
+.navbar .nav-link:hover::after,
+.navbar .nav-link.active::after {
+    width: 100%;
 }
 .navbar .nav-link:hover,
 .navbar .nav-link.active {
     color: var(--primary-purple) !important;
 }
 .navbar .btn-primary { /* Botão de Login Admin na Navbar */
-    padding: 8px 20px; /* Menor que os botões principais */
+    padding: 8px 20px; 
+    font-size: 0.9rem;
 }
+.navbar-toggler {
+    border-color: rgba(255,255,255,0.15);
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
 
 /* Hero Section */
 .hero-section {
-    /* background: linear-gradient(135deg, var(--primary-purple) 0%, var(--dark-bg-primary) 70%), url('../assets/images/hero-bg.jpg') no-repeat center center/cover; */
-    /* background-blend-mode: multiply; */
-    background-color: var(--dark-bg-primary); /* Sem imagem de fundo por enquanto, foco no gradiente ou cor sólida */
-    min-height: calc(100vh - 80px);
-    position: relative;
+    background-color: var(--dark-bg-primary);
+    background-image: linear-gradient(rgba(22, 22, 26, 0.3), rgba(22, 22, 26, 0.6)), 
+                      radial-gradient(ellipse at bottom, var(--primary-purple) 0%, transparent 60%);
+    background-blend-mode: overlay, normal;
+    min-height: calc(100vh - var(--navbar-height-desktop));
     color: var(--light-text-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Para animações que saem da tela */
-}
-
-.hero-section::before { /* Opcional: para um overlay sutil se usar imagem de fundo */
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* background-color: rgba(22, 22, 26, 0.7);  Overlay escuro */
-    z-index: 1;
+    overflow: hidden;
+    padding: 2rem 0;
 }
 .hero-section .container {
     position: relative;
     z-index: 2;
 }
-
 .hero-section h1 {
-    font-size: 3.5rem;
+    font-size: 3.25rem; /* Ajustado */
     font-weight: 700;
     margin-bottom: 1.5rem;
     line-height: 1.2;
 }
-
 .hero-section p.lead {
-    font-size: 1.20rem; /* Ajustado */
+    font-size: 1.15rem; /* Ajustado */
     font-weight: 300;
     margin-bottom: 2.5rem;
-    max-width: 600px;
+    max-width: 650px; /* Aumentado um pouco */
     margin-left: auto;
     margin-right: auto;
 }
-
-/* Features Section */
-#features {
-    padding-top: 60px;
-    padding-bottom: 60px;
-    background-color: var(--dark-bg-primary); /* Pode ser um pouco diferente para contraste */
+#btn-saiba { /* Botão principal "Saiba Mais" */
+    display: inline-block;
+    text-decoration: none;
+    min-width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 50px;
+    padding: 2px;
+    background: linear-gradient(120deg, var(--secondary-purple), var(--primary-purple));
+    background-size: 200% auto;
+    background-position: left center;
+    transition: background-position 0.5s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 0;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(127, 90, 240, 0.2);
 }
+#btn-saiba:hover {
+    background-position: right center;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(127, 90, 240, 0.35);
+}
+#btn-saiba span {
+    display: flex; /* Para centralizar o texto verticalmente */
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Para o flexbox funcionar */
+    color: white;
+    font-weight: 500; /* Mais peso */
+    text-align: center;
+    padding: 0 25px; /* Padding horizontal */
+    border-radius: 50px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Sections */
+section {
+    padding: 80px 0; /* Espaçamento vertical padrão para seções */
+}
+#features, #contact {
+    background-color: var(--dark-bg-primary);
+}
+#about {
+    background-color: var(--dark-bg-secondary);
+}
+section .text-center h2 {
+    margin-bottom: 0.75rem;
+}
+section .text-center p.lead {
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+}
+
+/* Feature Cards */
 #features .feature-card {
     background-color: var(--dark-bg-secondary);
     border: 1px solid var(--border-color-dark);
-    border-radius: 10px;
-    padding: 2rem;
+    border-radius: 12px; /* Mais arredondado */
+    padding: 2.5rem 2rem; /* Mais padding */
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 #features .feature-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(127, 90, 240, 0.15);
+    transform: translateY(-12px); /* Elevação maior */
+    box-shadow: 0 12px 35px rgba(127, 90, 240, 0.2); /* Sombra mais pronunciada */
     border-color: var(--primary-purple);
 }
 #features .feature-card .bi {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-size: 3rem; /* Ícone maior */
+    margin-bottom: 1.5rem; /* Mais espaço abaixo do ícone */
     color: var(--primary-purple);
-    display: inline-block; /* Para animação */
-    transition: transform 0.3s ease;
+    display: inline-block;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efeito mais elástico */
 }
 #features .feature-card:hover .bi {
-    transform: scale(1.1) rotate(-5deg);
+    transform: scale(1.15) rotate(-8deg);
 }
 #features .feature-card h5 {
     font-weight: 600;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
 }
 
 /* About Section */
-#about {
-    padding-top: 60px;
-    padding-bottom: 60px;
-    background-color: var(--dark-bg-secondary);
+#about img.img-fluid { /* A imagem já tem .img-fluid, mas podemos adicionar estilos específicos */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    max-width: 100%; /* Adicionado para garantir responsividade */
+    height: auto; /* Adicionado para manter proporção */
 }
-#about img.img-fluid {
-    border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+#texto-sobre {
+    text-align: justify;
+    font-size: 1.05rem;
 }
 
 /* Contact Section */
-#contact {
-    padding-top: 60px;
-    padding-bottom: 60px;
-    background-color: var(--dark-bg-primary);
-}
 #contact .form-control {
     background-color: var(--dark-bg-secondary);
     color: var(--light-text-primary);
@@ -223,7 +284,7 @@ a:hover {
     background-color: var(--dark-bg-tertiary);
     color: var(--light-text-primary);
     border-color: var(--primary-purple);
-    box-shadow: 0 0 0 0.25rem rgba(127, 90, 240, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(127, 90, 240, 0.3);
 }
 #contact ::placeholder {
     color: var(--light-text-tertiary);
@@ -232,9 +293,9 @@ a:hover {
 /* Footer */
 footer {
     background-color: var(--dark-bg-secondary);
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding: 2.5rem 0; /* Mais padding */
     border-top: 1px solid var(--border-color-dark);
+    font-size: 0.9rem;
 }
 footer p {
     margin-bottom: 0.5rem;
@@ -242,10 +303,12 @@ footer p {
 }
 footer .bi-heart-fill {
     color: var(--primary-purple);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, color 0.3s ease;
+    vertical-align: middle; /* Melhor alinhamento */
 }
 footer:hover .bi-heart-fill {
     transform: scale(1.3);
+    color: var(--secondary-purple);
 }
 
 /* Modal de Login Admin */
@@ -254,132 +317,62 @@ footer:hover .bi-heart-fill {
     color: var(--light-text-primary);
     border-radius: 10px;
     border: 1px solid var(--border-color-dark);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
 .modal-header {
-    background-color: var(--dark-bg-tertiary); /* Um pouco diferente para o cabeçalho do modal */
+    background-color: var(--primary-purple); /* Destaque para o cabeçalho do modal */
     color: var(--light-text-primary);
-    border-bottom: 1px solid var(--border-color-dark);
+    border-bottom: 1px solid var(--primary-purple-hover);
 }
 .modal-header .btn-close {
-    filter: invert(1) grayscale(100%) brightness(200%); /* Para o X ficar branco */
+    filter: invert(1) grayscale(100%) brightness(200%);
 }
 .modal-body .form-label {
     color: var(--light-text-secondary);
 }
 .modal-body .form-control {
-    background-color: var(--dark-bg-primary); /* Inputs dentro do modal podem ser mais escuros */
+    background-color: var(--dark-bg-primary);
     color: var(--light-text-primary);
     border: 1px solid var(--border-color-dark);
 }
 .modal-body .form-control:focus {
     background-color: var(--dark-bg-primary);
     border-color: var(--primary-purple);
-    box-shadow: 0 0 0 0.25rem rgba(127, 90, 240, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(127, 90, 240, 0.3);
+}
+.modal-body .btn-primary { /* Botão de entrar no modal */
+    margin-top: 1rem;
 }
 
 
-/* Animações de Scroll (Intersection Observer) e Entrada */
+/* Animações de Scroll e Entrada */
 .animated-item {
     opacity: 0;
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
+.fade-in-up { transform: translateY(40px); }
+.fade-in-left { transform: translateX(-40px); }
+.fade-in-right { transform: translateX(40px); }
+.zoom-in { transform: scale(0.85); }
 
-.fade-in-up {
-    transform: translateY(30px);
-}
-.fade-in-left {
-    transform: translateX(-30px);
-}
-.fade-in-right {
-    transform: translateX(30px);
-}
-.zoom-in {
-    transform: scale(0.9);
-}
-
-#logo-alimenta {
-    width: 400px;
-    height: auto;
-}
-
-#texto-sobre {
-    text-align: justify;
-}
-.destaque-alimenta {
-  background: linear-gradient(90deg, #5033b2, #e677c7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-#btn-saiba {
-    display: inline-block;
-    text-decoration: none;
-    width: 220px;
-    height: 50px;
-    border: none;
-    border-radius: 50px;
-    padding: 2px;
-    background: linear-gradient(90deg, #5033b2, #e677c7);
-    background-size: 200% auto;
-    background-position: left center;
-    transition: background-position 0.5s ease;
-    position: relative;
-    z-index: 0;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-#btn-saiba::before {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    right: 2px;
-    bottom: 2px;
-    border-radius: 50px;
-    background: transparent;
-    z-index: -1;
-}
-
-#btn-saiba span {
-    display: inline-block;
-    color: white;
-    font-weight: normal;
-    line-height: 46px;
-    text-align: center;
-    padding: 0 20px;
-    border-radius: 50px;
-    position: relative;
-    z-index: 1;
-    transition: background-position 0.5s ease;
-}
-
-#btn-saiba:hover {
-    background-position: right center;
-}
-
-#btn-saiba:hover span {
-    background-position: right center;
-}
-
-.is-visible { /* Classe adicionada pelo Intersection Observer */
+.is-visible {
     opacity: 1;
     transform: translateY(0) translateX(0) scale(1);
 }
 
-/* Animações de entrada para elementos do Hero */
-.hero-section h1, .hero-section p.lead, .hero-section .btn {
+.destaque-alimenta {
+  background: linear-gradient(120deg, var(--secondary-purple), var(--primary-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Hero Keyframe Animations (já existentes, mantidas) */
+.hero-section h1, .hero-section p.lead, .hero-section #btn-saiba {
     opacity: 0;
 }
-.hero-section h1 {
-    animation: heroFadeInUp 0.8s 0.3s forwards ease-out;
-}
-.hero-section p.lead {
-    animation: heroFadeInUp 0.8s 0.6s forwards ease-out;
-}
-.hero-section .btn {
-    animation: heroZoomIn 0.6s 0.9s forwards ease-out;
-}
+.hero-section h1 { animation: heroFadeInUp 0.8s 0.3s forwards ease-out; }
+.hero-section p.lead { animation: heroFadeInUp 0.8s 0.6s forwards ease-out; }
+.hero-section #btn-saiba { animation: heroZoomIn 0.6s 0.9s forwards ease-out; }
 
 @keyframes heroFadeInUp {
     from { opacity: 0; transform: translateY(40px); }
@@ -392,33 +385,102 @@ footer:hover .bi-heart-fill {
 
 
 /* Responsividade */
-@media (max-width: 991.98px) {
-    .navbar-nav {
+@media (max-width: 991.98px) { /* Tablets e Desktops menores */
+    body {
+        padding-top: var(--navbar-height-desktop); /* Manter o padding para fixed-top */
+    }
+    .navbar {
+        padding: 0.5rem 1rem; /* Navbar mais compacta */
+    }
+    #logo-alimenta {
+        max-height: 45px;
+        max-width: 200px;
+    }
+    .navbar-nav { /* Menu hamburguer */
         background-color: var(--dark-bg-tertiary);
         border-radius: 0.25rem;
-        margin-top: 0.5rem;
+        margin-top: 0.75rem; /* Espaço acima do menu dropdown */
         padding: 0.5rem 0;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .navbar .nav-link {
+        margin: 0.25rem 1rem; /* Espaçamento no menu dropdown */
+        padding: 0.5rem;
     }
     .hero-section h1 {
-        font-size: 2.8rem;
-    }
-}
-
-@media (max-width: 767.98px) {
-    body {
-        padding-top: 70px; /* Ajustar se a navbar ficar menor no mobile */
-    }
-    .hero-section {
-        text-align: center;
-    }
-    .hero-section h1 {
-        font-size: 2.2rem;
+        font-size: 2.75rem;
     }
     .hero-section p.lead {
         font-size: 1.1rem;
     }
+    section {
+        padding: 60px 0;
+    }
+    #features .feature-card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 767.98px) { /* Mobile */
+    body {
+        padding-top: var(--navbar-height-mobile);
+    }
+    .navbar {
+        min-height: var(--navbar-height-mobile);
+    }
+    #logo-alimenta {
+        max-height: 40px;
+        max-width: 160px;
+    }
+    .hero-section {
+        min-height: calc(100vh - var(--navbar-height-mobile));
+        text-align: center;
+        padding: 1rem 0;
+    }
+    .hero-section h1 {
+        font-size: 2.25rem;
+    }
+    .hero-section p.lead {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+    #btn-saiba {
+        min-width: 180px;
+        height: 45px;
+        font-size: 0.95rem;
+    }
+    #features .col-md-4 { /* Cards empilham antes, mas aqui garantimos espaçamento */
+        margin-bottom: 1.5rem;
+    }
     #about .row > div {
         text-align: center;
         margin-bottom: 1.5rem;
+    }
+    #about img.img-fluid {
+        max-height: 300px; /* Reduzir altura máxima da imagem no mobile */
+    }
+    section {
+        padding: 50px 0;
+    }
+    section .text-center p.lead {
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 575.98px) { /* Mobile Extra Small */
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    .hero-section p.lead {
+        font-size: 0.95rem;
+    }
+     h2.fw-bold {
+        font-size: 1.75rem;
+    }
+    p {
+        font-size: 0.95rem;
+    }
+    #contact .form-control {
+        padding: 0.8rem;
     }
 }
