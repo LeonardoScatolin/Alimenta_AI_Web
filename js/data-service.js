@@ -1,7 +1,7 @@
 (function(window) {
     'use strict';
 
-    const API_BASE_URL = 'https://alimentaai.duckdns.org:3333'; // URL da sua API BackAlimenta
+    const API_BASE_URL = 'https://alimentaai.duckdns.org'; // URL da sua API BackAlimenta
 
     const DataService = {
         authenticateAdmin: async function(email, password) {
